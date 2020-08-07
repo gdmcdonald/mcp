@@ -196,8 +196,9 @@ get_prior_str = function(prior, i, varying_group = NULL) {
 
   # If not either number or known parameter, it should be a known distribution.
   if (!is_fixed && !stringr::str_detect(value, all_d))
-    stop("The prior '", name, " = ", value, "' is not a known distribution, a number, nor a model parameter.")
-
+    warning("The prior '", name, " = ", value, "' is not a known distribution, a number, nor a model parameter. Proceeding as if it's a fixed value - caution!")
+      # Assume it was a fixed value. Just equate name and value
+    return(paste0("  ", name, " = ", value, "  # Fixed\n"))
   # If it is a known distribution
   if (!is_fixed) {
     # Convert to precision
